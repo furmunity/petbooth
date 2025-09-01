@@ -1,1 +1,802 @@
-테스트
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furmunity | 확장된 브랜드 스토리 - 모든 발걸음이 존중받는 세상</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Furmunity는 반려동물과 가족의 소중한 순간을 기록하는 PetBooth 플랫폼입니다. 펫과 사람을 연결하는 따뜻한 기술로 헬스케어, 커뮤니티, 보험 서비스를 제공합니다.">
+    <meta name="keywords" content="반려동물, 펫부스, PetBooth, 반려동물 사진, 펫 헬스케어, 반려동물 보험, 퍼뮤니티">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Furmunity">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Furmunity | 모든 발걸음이 존중받는 세상">
+    <meta property="og:description" content="반려동물과 가족의 소중한 순간을 기록하는 혁신적인 PetBooth 플랫폼">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://your-domain.com/assets/hero-pets.jpg">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Furmunity Design System - Pet-focused warm and modern design */
+        :root {
+            /* Core Brand Colors - Warm and inviting pet theme */
+            --background: hsl(37, 15%, 98%);
+            --foreground: hsl(20, 14%, 29%);
+            
+            /* Brand Primary - Warm orange inspired by sunset and pet warmth */
+            --primary: hsl(14, 100%, 67%);
+            --primary-foreground: hsl(0, 0%, 100%);
+            --primary-glow: hsl(14, 100%, 75%);
+            --primary-muted: hsl(14, 50%, 90%);
+            
+            /* Secondary - Soft peach tones */
+            --secondary: hsl(20, 50%, 95%);
+            --secondary-foreground: hsl(20, 14%, 29%);
+            
+            /* Accent - Warm coral */
+            --accent: hsl(12, 88%, 85%);
+            --accent-foreground: hsl(20, 14%, 29%);
+            
+            /* Surface colors */
+            --card: hsl(0, 0%, 100%);
+            --card-foreground: hsl(20, 14%, 29%);
+            --muted: hsl(20, 25%, 96%);
+            --muted-foreground: hsl(20, 8%, 46%);
+            
+            /* Interactive elements */
+            --border: hsl(20, 20%, 90%);
+            --input: hsl(20, 20%, 90%);
+            --ring: hsl(14, 100%, 67%);
+            
+            /* Custom gradients */
+            --gradient-hero: linear-gradient(135deg, hsl(37, 15%, 98%) 0%, hsl(20, 50%, 95%) 50%, hsl(12, 50%, 92%) 100%);
+            --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%) 0%, hsl(20, 25%, 98%) 100%);
+            --gradient-primary: linear-gradient(135deg, hsl(14, 100%, 67%) 0%, hsl(12, 88%, 75%) 100%);
+            
+            /* Shadows */
+            --shadow-soft: 0 4px 20px -4px hsl(14, 100%, 67%, 0.15);
+            --shadow-elegant: 0 10px 40px -10px hsl(14, 100%, 67%, 0.25);
+            --shadow-glow: 0 0 30px hsl(14, 100%, 75%, 0.3);
+            
+            /* Animations */
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(253, 251, 248, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 50;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .nav h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-menu {
+            display: none;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav-menu {
+                display: flex;
+            }
+        }
+
+        .nav-link {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--gradient-hero);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 10;
+            padding: 2rem;
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--foreground);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.25rem, 4vw, 2rem);
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
+            color: var(--primary-foreground);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover {
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-alt {
+            background: var(--secondary);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--foreground);
+        }
+
+        .section-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--muted-foreground);
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Card Styles */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: var(--gradient-card);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-elegant);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .card-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--foreground);
+        }
+
+        .card-subtitle {
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding-top 0.5s ease-out;
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        .card-description.visible {
+            max-height: 200px;
+            padding-top: 1rem;
+        }
+
+        /* Vision Section */
+        .vision-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .vision-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 5rem;
+            }
+        }
+
+        .service-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .flow-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .flow-circle {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.875rem;
+            text-align: center;
+            padding: 0.5rem;
+            box-shadow: var(--shadow-elegant);
+        }
+
+        .flow-circle.primary {
+            background: var(--gradient-primary);
+            color: var(--primary-foreground);
+        }
+
+        .flow-circle.secondary {
+            background: var(--foreground);
+            color: var(--background);
+        }
+
+        .flow-line {
+            flex: 1;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: var(--gradient-card);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-soft);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-elegant);
+        }
+
+        .service-card.selected {
+            border: 2px solid var(--primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .service-title {
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+            color: var(--foreground);
+        }
+
+        .service-subtitle {
+            font-size: 0.75rem;
+            color: var(--muted-foreground);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: var(--card);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-elegant);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .chart-description {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--foreground);
+            color: var(--background);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px hsl(14, 100%, 75%, 0.3); }
+            50% { box-shadow: 0 0 40px hsl(14, 100%, 75%, 0.6); }
+        }
+
+        .animate-glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .flow-line {
+                width: 4px;
+                height: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header">
+        <nav class="nav">
+            <h1>Furmunity</h1>
+            <ul class="nav-menu">
+                <li><a class="nav-link" onclick="scrollToSection('intro')">브랜드 스토리</a></li>
+                <li><a class="nav-link" onclick="scrollToSection('why')">우리의 시작</a></li>
+                <li><a class="nav-link" onclick="scrollToSection('how')">PetBooth</a></li>
+                <li><a class="nav-link" onclick="scrollToSection('vision')">우리의 비전</a></li>
+                <li><a class="nav-link" onclick="scrollToSection('values')">핵심 가치</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="intro" class="hero">
+        <div class="hero-content fade-in">
+            <h2>모든 발걸음이<br>존중받는 세상</h2>
+            <p class="hero-subtitle">Where Every Paw Belongs</p>
+            <p class="hero-description">
+                반려동물과 가족의 소중한 순간을 혁신적인 기술로 기록하고, 
+                데이터 기반 맞춤형 서비스로 더 나은 삶을 만들어가는 퍼뮤니티의 따뜻한 여정을 시작하세요.
+            </p>
+            <button class="btn" onclick="scrollToSection('why')">스토리 시작하기 👇</button>
+        </div>
+    </section>
+
+    <!-- Why Section -->
+    <section id="why" class="section">
+        <div class="container">
+            <h3 class="section-title fade-in">우리는 왜 이 일을 시작했을까요?</h3>
+            <div class="section-content">
+                <p class="fade-in">
+                    Furmunity는 반려동물을 단순한 '애완동물'이 아닌, 삶을 함께하는 소중한 가족으로 바라보는 마음에서 출발합니다. 
+                    우리의 삶은 그들과 함께하는 수많은 순간들로 채워지지만, 그 소중한 기억을 간직하고 기록하는 방법은 여전히 부족했습니다.
+                </p>
+                <p class="fade-in">
+                    전문 스튜디오 촬영은 시간적, 금전적 부담이 컸고, 일상의 기록은 종종 흐릿한 스마트폰 사진 한 장으로 끝나는 경우가 많았습니다. 
+                    우리는 이 문제를 해결하고 싶었습니다. 누구나, 언제든, 부담 없이 가족의 가장 아름다운 순간을 고화질로 남길 수 있는 방법은 없을까? 
+                    이 고민이 Furmunity의 첫걸음이었습니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How Section -->
+    <section id="how" class="section section-alt">
+        <div class="container">
+            <h3 class="section-title fade-in">솔루션: PetBooth의 탄생</h3>
+            <div class="section-content fade-in">
+                <p>
+                    우리는 이 문제를 해결하기 위해 'PetBooth'를 만들었습니다. PetBooth는 단순히 사진을 찍는 것을 넘어, 
+                    반려동물과의 관계를 강화하는 새로운 경험을 제공합니다. 아래 세 가지 핵심 가치를 클릭하여 자세히 알아보세요.
+                </p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card fade-in" onclick="toggleCard('capture')">
+                    <span class="card-emoji animate-float">📷</span>
+                    <h4 class="card-title">Capture</h4>
+                    <p class="card-subtitle">소중한 순간을 손쉽게 촬영하고 기억으로 간직하는 경험</p>
+                    <div id="capture" class="card-description">
+                        <p>특별한 장비나 기술 없이도 스튜디오급 고화질 사진을 얻을 수 있습니다. PetBooth는 반려동물의 시선과 감정까지 담아내는 최적의 환경을 제공합니다.</p>
+                    </div>
+                </div>
+                
+                <div class="card fade-in" onclick="toggleCard('connect')">
+                    <span class="card-emoji animate-float">🔗</span>
+                    <h4 class="card-title">Connect</h4>
+                    <p class="card-subtitle">사진을 넘어, 추억을 연결하고 공유하는 경험</p>
+                    <div id="connect" class="card-description">
+                        <p>촬영한 사진은 즉시 모바일과 연동됩니다. 굿즈로 제작하거나, 친구들과 공유하며 행복을 확장하는 새로운 방식의 소통을 가능하게 합니다.</p>
+                    </div>
+                </div>
+                
+                <div class="card fade-in" onclick="toggleCard('cherish')">
+                    <span class="card-emoji animate-float">💖</span>
+                    <h4 class="card-title">Cherish</h4>
+                    <p class="card-subtitle">일상 속에서 행복을 오래도록 소장하는 경험</p>
+                    <div id="cherish" class="card-description">
+                        <p>단순한 파일이 아닌, 반려동물의 발자취를 추억으로 쌓아가는 여정입니다. PetBooth는 모든 순간이 의미 있는 가치가 되도록 돕습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section id="vision" class="section">
+        <div class="container">
+            <h3 class="section-title fade-in">PetBooth, 그 이상의 가치</h3>
+            <div class="section-content fade-in">
+                <p>
+                    퍼뮤니티는 반려동물과 사람의 소중한 순간을 기록하는 세계 최초의 플랫폼입니다.
+                    우리가 만든 기술은 단순한 촬영을 넘어, 펫과 사람을 연결하는 데이터가 되고, 
+                    보험·헬스케어·커머스로 확장되는 글로벌 표준이 될 것입니다.
+                </p>
+                <p>
+                    우리는 단지 기계를 만드는 것이 아니라, 펫과 사람이 함께 웃는 순간을 문화로 만드는 창조자입니다. 
+                    퍼뮤니티가 만든 문화는 반려동물과 사람이 더 가까워지고, 세상을 따뜻하게 바꾸는 힘이 될 것입니다.
+                </p>
+                <p style="font-weight: 600;">
+                    아래 다이어그램의 각 항목을 클릭하여 데이터가 어떻게 따뜻한 서비스로 확장되는지 확인해보세요.
+                </p>
+            </div>
+
+            <div class="vision-grid">
+                <!-- Service Flow Diagram -->
+                <div class="service-flow fade-in">
+                    <div class="flow-header">
+                        <div class="flow-circle primary animate-glow">PetBooth</div>
+                        <div class="flow-line"></div>
+                        <div class="flow-circle secondary">데이터</div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: flex-end;">
+                        <div style="width: 4px; height: 4rem; background: var(--accent); border-radius: 2px;"></div>
+                    </div>
+                    
+                    <div class="services-grid">
+                        <div class="service-card" data-service="healthcare" onclick="selectService('healthcare')">
+                            <div class="service-title">헬스케어</div>
+                            <div class="service-subtitle">예방, 정기 검진, 영양</div>
+                        </div>
+                        <div class="service-card" data-service="community" onclick="selectService('community')">
+                            <div class="service-title">커뮤니티</div>
+                            <div class="service-subtitle">정보 공유, 교류, 전문가 상담</div>
+                        </div>
+                        <div class="service-card" data-service="insurance" onclick="selectService('insurance')">
+                            <div class="service-title">보험</div>
+                            <div class="service-subtitle">합리적 보험료, 간편 청구</div>
+                        </div>
+                        <div class="service-card" data-service="lifestyle" onclick="selectService('lifestyle')">
+                            <div class="service-title">라이프스타일</div>
+                            <div class="service-subtitle">맞춤 상품, 여행, 교육</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Chart -->
+                <div class="fade-in">
+                    <div class="chart-container">
+                        <div class="chart-wrapper">
+                            <canvas id="visionChart"></canvas>
+                        </div>
+                        <p id="chart-description" class="chart-description">
+                            위 서비스 항목을 클릭해 보세요.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section id="values" class="section section-alt">
+        <div class="container">
+            <h3 class="section-title fade-in">우리가 믿는 핵심 가치</h3>
+            
+            <div class="cards-grid">
+                <div class="card fade-in">
+                    <h4 class="card-title" style="color: var(--primary); font-size: 1.5rem;">반려동물은 가족이다</h4>
+                    <p style="color: var(--muted-foreground); line-height: 1.7;">
+                        우리는 반려동물을 단순히 키우는 존재가 아니라, 삶의 기쁨과 슬픔을 함께 나누는 소중한 가족으로 존중합니다. 
+                        이 믿음이 Furmunity의 모든 활동의 기본이 됩니다.
+                    </p>
+                </div>
+                
+                <div class="card fade-in">
+                    <h4 class="card-title" style="color: var(--primary); font-size: 1.5rem;">기술은 사람과 동물을 더 가깝게 만든다</h4>
+                    <p style="color: var(--muted-foreground); line-height: 1.7;">
+                        혁신적인 기술은 관계를 멀어지게 하는 것이 아니라, 더욱 깊고 풍부하게 만들어야 합니다. 
+                        우리는 기술을 통해 반려동물과 보호자의 교감을 돕고, 더 나은 삶을 가능하게 합니다.
+                    </p>
+                </div>
+                
+                <div class="card fade-in">
+                    <h4 class="card-title" style="color: var(--primary); font-size: 1.5rem;">우리의 혁신은 따뜻함으로 이어진다</h4>
+                    <p style="color: var(--muted-foreground); line-height: 1.7;">
+                        Furmunity의 모든 혁신과 성장은 결국 세상에 따뜻함을 전하는 방향으로 나아가야 합니다. 
+                        우리는 사랑과 배려가 담긴 기술을 통해 긍정적인 변화를 만들어 갑니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h2>Furmunity</h2>
+            <p>Capture, Connect, Cherish</p>
+            <p style="color: var(--muted-foreground);">Where Every Paw Belongs</p>
+            <p style="color: var(--muted-foreground); margin-top: 2rem; font-size: 0.875rem;">© 2025 Furmunity. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Chart Data
+        const chartData = {
+            healthcare: {
+                labels: ['정밀 건강 분석', 'AI 기반 질병 예측', '맞춤형 영양 솔루션'],
+                data: [50, 30, 20],
+                description: "사진 데이터와 행동 패턴 분석을 통해 반려동물의 미묘한 건강 변화를 감지하고, 데이터 기반 맞춤형 헬스케어 솔루션을 제공합니다."
+            },
+            community: {
+                labels: ['펫 정보 공유', '지역별 교류 모임', '전문가 Q&A'],
+                data: [45, 35, 20],
+                description: "보호자들이 소중한 추억과 유용한 정보를 나누고, 오프라인으로 만나 교류하며 강력한 펫 커뮤니티를 형성합니다."
+            },
+            insurance: {
+                labels: ['데이터 기반 보험료', '사진 청구 시스템', '맞춤 보장 상품'],
+                data: [60, 25, 15],
+                description: "촬영 데이터를 활용한 합리적인 보험료 산정, 간편한 청구 시스템으로 반려동물 보험의 접근성과 편의성을 혁신합니다."
+            },
+            lifestyle: {
+                labels: ['맞춤형 상품 추천', '펫 동반 여행/숙소 정보', '교육 및 훈련 콘텐츠'],
+                data: [40, 30, 30],
+                description: "반려동물의 특성과 취향을 분석하여 최적의 상품을 추천하고, 함께 즐길 수 있는 다양한 라이프스타일 경험을 제안합니다."
+            }
+        };
+
+        let currentChart;
+        let currentService = 'healthcare';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeIntersectionObserver();
+            initializeChart();
+            selectService('healthcare'); // Default selection
+        });
+
+        // Intersection Observer for fade-in animations
+        function initializeIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Initialize Chart
+        function initializeChart() {
+            const ctx = document.getElementById('visionChart');
+            if (ctx) {
+                const data = chartData[currentService];
+                currentChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: '서비스 비중 (%)',
+                            data: data.data,
+                            backgroundColor: [
+                                'hsl(14, 100%, 67%)',
+                                'hsl(14, 70%, 75%)',
+                                'hsl(12, 88%, 85%)'
+                            ],
+                            borderColor: 'hsl(37, 15%, 98%)',
+                            borderWidth: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: 'hsl(20, 14%, 29%)',
+                                    font: {
+                                        family: 'Noto Sans KR'
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.parsed.x + '%';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    },
+                                    color: 'hsl(20, 14%, 29%)'
+                                },
+                                grid: {
+                                    color: 'hsl(20, 20%, 90%)'
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: 'hsl(20, 14%, 29%)'
+                                },
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+       https://furmunity.github.io/petbooth/https://furmunity.github.io/petbooth/
+            document.querySelector(`[data-service="${serviceKey}"]`).classList.add('selected');
+        }
+    </script>
+</body>
+</html>
