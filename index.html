@@ -117,6 +117,7 @@
         .nav-menu {
             display: none;
             gap: 2rem;
+            list-style: none; /* Remove list markers */
         }
 
         @media (min-width: 768px) {
@@ -199,7 +200,7 @@
 
         /* Section Styles */
         .section {
-            padding: 5rem 0;
+            padding: 8rem 0;
         }
 
         .section-alt {
@@ -287,13 +288,15 @@
             grid-template-columns: 1fr;
             gap: 3rem;
             margin-top: 3rem;
-            align-items: center;
+            align-items: flex-start; /* Changed from center to flex-start */
         }
 
         @media (min-width: 1024px) {
             .vision-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 5rem;
+                align-items: flex-start; /* Consistent alignment */
+                align-content: start; /* Prevent vertical movement */
             }
         }
 
@@ -301,6 +304,10 @@
             display: flex;
             flex-direction: column;
             gap: 2rem;
+            height: 350px; /* Fixed height instead of min/max */
+            position: relative; /* Stable positioning */
+            justify-content: flex-start; /* Align content to top */
+            align-items: stretch; /* Stretch children to full width */
         }
 
         .flow-header {
@@ -345,6 +352,8 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
             margin-top: 2rem;
+            height: 140px; /* Fixed height to prevent movement */
+            align-content: start; /* Align content to top */
         }
 
         .service-card {
@@ -353,18 +362,24 @@
             border-radius: 0.5rem;
             box-shadow: var(--shadow-soft);
             cursor: pointer;
-            transition: var(--transition-smooth);
+            transition: box-shadow 0.3s ease, background-color 0.3s ease; /* Only animate non-layout properties */
             text-align: center;
+            height: 60px; /* Fixed height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .service-card:hover {
-            transform: scale(1.05);
             box-shadow: var(--shadow-elegant);
+            background: linear-gradient(145deg, hsl(0, 0%, 98%) 0%, hsl(20, 25%, 96%) 100%);
         }
 
         .service-card.selected {
             border: 2px solid var(--primary);
             box-shadow: var(--shadow-glow);
+            background: linear-gradient(145deg, hsl(14, 100%, 97%) 0%, hsl(20, 25%, 98%) 100%);
         }
 
         .service-title {
@@ -384,14 +399,16 @@
             border-radius: 1rem;
             padding: 1.5rem;
             box-shadow: var(--shadow-elegant);
-            height: 400px;
+            height: 380px; /* Adjusted height to match service flow */
             display: flex;
             flex-direction: column;
+            transition: box-shadow 0.3s ease; /* Only animate box-shadow to prevent layout shift */
         }
 
         .chart-wrapper {
             flex: 1;
             position: relative;
+            overflow: hidden; /* Prevent layout shifts during chart updates */
         }
 
         .chart-description {
@@ -400,6 +417,8 @@
             color: var(--muted-foreground);
             font-size: 0.875rem;
             line-height: 1.4;
+            transition: opacity 0.3s ease-in-out;
+            min-height: 3rem; /* Prevent layout shift */
         }
 
         /* Footer */
@@ -578,6 +597,12 @@
                     우리는 단지 기계를 만드는 것이 아니라, 펫과 사람이 함께 웃는 순간을 문화로 만드는 창조자입니다. 
                     퍼뮤니티가 만든 문화는 반려동물과 사람이 더 가까워지고, 세상을 따뜻하게 바꾸는 힘이 될 것입니다.
                 </p>
+                <p>
+                    그리고 우리는 이 회사를 함께 키우는 주인입니다. 직원 모두가 브랜드의 성장과 성과를 공유하며, 세계 속에서 자부심을 느낄 회사를 만들어 갈 것입니다.
+                </p>
+                <p>
+                    퍼뮤니티는 오늘의 순간을 기록하고, 내일의 세상을 연결하며, 모두가 함께하는 미래를 창조합니다.
+                </p>
                 <p style="font-weight: 600;">
                     아래 다이어그램의 각 항목을 클릭하여 데이터가 어떻게 따뜻한 서비스로 확장되는지 확인해보세요.
                 </p>
@@ -617,7 +642,7 @@
                 </div>
 
                 <!-- Interactive Chart -->
-                <div class="fade-in">
+                <div class="fade-in" style="height: 400px; display: flex; flex-direction: column;">
                     <div class="chart-container">
                         <div class="chart-wrapper">
                             <canvas id="visionChart"></canvas>
@@ -702,6 +727,17 @@
         let currentChart;
         let currentService = 'healthcare';
 
+        // Smooth scroll to section function
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             initializeIntersectionObserver();
@@ -750,6 +786,13 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         indexAxis: 'y',
+                        animation: {
+                            duration: 600, // Smooth animation duration
+                            easing: 'easeInOutQuart'
+                        },
+                        layout: {
+                            padding: 0 // Fixed padding to prevent layout changes
+                        },
                         plugins: {
                             legend: {
                                 position: 'bottom',
@@ -794,8 +837,60 @@
                     }
                 });
             }
-       https://furmunity.github.io/petbooth/https://furmunity.github.io/petbooth/
-            document.querySelector(`[data-service="${serviceKey}"]`).classList.add('selected');
+        }
+
+        // Toggle card description visibility
+        function toggleCard(cardId) {
+            const cardDescription = document.getElementById(cardId);
+            if (cardDescription) {
+                cardDescription.classList.toggle('visible');
+                
+                // Add click effect for better user feedback
+                const card = cardDescription.closest('.card');
+                if (card) {
+                    card.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        card.style.transform = '';
+                    }, 150);
+                }
+            }
+        }
+
+        // Select service and update chart
+        function selectService(serviceKey) {
+            // Remove selected class from all service cards
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked service card
+            const selectedCard = document.querySelector(`[data-service="${serviceKey}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
+            
+            // Update current service
+            currentService = serviceKey;
+            
+            // Update chart data with smooth animation
+            if (currentChart && chartData[serviceKey]) {
+                const data = chartData[serviceKey];
+                currentChart.data.labels = data.labels;
+                currentChart.data.datasets[0].data = data.data;
+                
+                // Update with smooth but controlled animation
+                currentChart.update(); // Use default animation for smooth transition
+                
+                // Update description with smooth transition
+                const descriptionElement = document.getElementById('chart-description');
+                if (descriptionElement) {
+                    descriptionElement.style.opacity = '0';
+                    setTimeout(() => {
+                        descriptionElement.textContent = data.description;
+                        descriptionElement.style.opacity = '1';
+                    }, 300); // Increased delay to sync with chart animation
+                }
+            }
         }
     </script>
 </body>
