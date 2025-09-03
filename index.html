@@ -472,18 +472,62 @@
                 gap: 1.5rem;
             }
 
-            .services-grid {
-                grid-template-columns: 1fr;
+            /* Service Flow 모바일 최적화 */
+            .service-flow {
+                height: auto; /* 고정 높이 해제 */
+                min-height: 300px; /* 최소 높이만 설정 */
+                gap: 1.5rem; /* 간격 줄임 */
             }
 
             .flow-header {
                 flex-direction: column;
                 text-align: center;
+                gap: 1rem; /* 간격 줄임 */
+            }
+
+            .flow-circle {
+                width: 4rem; /* 크기 줄임 */
+                height: 4rem;
+                font-size: 0.75rem; /* 폰트 크기 줄임 */
+                padding: 0.25rem;
             }
 
             .flow-line {
                 width: 4px;
-                height: 3rem;
+                height: 2rem; /* 높이 줄임 */
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                height: auto; /* 고정 높이 해제 */
+                gap: 0.75rem;
+            }
+
+            .service-card {
+                height: auto; /* 고정 높이 해제 */
+                min-height: 50px; /* 최소 높이만 설정 */
+                padding: 0.75rem;
+            }
+
+            .service-title {
+                font-size: 0.875rem; /* 폰트 크기 줄임 */
+                margin-bottom: 0.125rem;
+            }
+
+            .service-subtitle {
+                font-size: 0.625rem; /* 폰트 크기 줄임 */
+            }
+
+            /* Vision grid 모바일 최적화 */
+            .vision-grid {
+                gap: 2rem; /* 간격 줄임 */
+            }
+
+            /* Chart container 모바일 최적화 */
+            .chart-container {
+                height: auto; /* 고정 높이 해제 */
+                min-height: 300px; /* 최소 높이만 설정 */
+                padding: 1rem; /* 패딩 줄임 */
             }
         }
     </style>
